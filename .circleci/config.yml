@@ -7,6 +7,10 @@ jobs:
     working_directory: ~/patches
     steps:
       - checkout
+      - run: echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" | sudo tee -a /etc/apt/sources.list
+      - run: sudo apt-get update
+      - run: sudo apt-get install git
+      - run: git --version
       - run: sudo composer self-update
       - restore_cache:
           keys:
@@ -16,6 +20,6 @@ jobs:
       - save_cache:
           key: composer-v1-{{ checksum "composer.json" }}
           paths:
-            - vendor`
+            - vendor
       - run: composer validate
       - run: composer phpunit

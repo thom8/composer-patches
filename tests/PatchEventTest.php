@@ -67,6 +67,7 @@ class PatchEventTest extends TestCase {
     $this->assertFileExists($patchFile, 'patch file should exist after install.');
     $this->fs->removeDirectory($this->tmpDir . '/vendor/composer/semver');
     $this->composer('config extra.patches.composer/semver --unset');
+    $this->composer('update --lock');
     $this->composer('install');
     $this->assertFileNotExists($patchFile, 'patch file should not exist.');
   }
